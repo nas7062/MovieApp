@@ -1,3 +1,4 @@
+import MoiveSlider from "../Components/MovieSlider";
 import TopBar from "../Components/TopBar";
 import VideoPlayer from "../Components/VideoPlayer";
 const Main = () => {
@@ -5,6 +6,7 @@ const Main = () => {
     <>
       <TopBar />
       <VideoPlayer/>
+      <MoiveSlider/>
     </>
   );
 };

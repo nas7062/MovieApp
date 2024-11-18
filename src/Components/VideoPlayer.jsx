@@ -26,7 +26,7 @@ const VideoPlayer = () => {
           playing={play}
           volume={volumecount}
         />
-        <div className="max-w-screen-sm mx-auto">
+        <div className="max-w-screen-sm mx-auto my-auto">
           <div className="text-white text-lg z-0">
             <p className="text-4xl">청설</p>
             <p className="max-w-64">
