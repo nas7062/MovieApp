@@ -2,14 +2,14 @@ import { CiSearch } from "react-icons/ci";
 const NavBar = () => {
   return (
     <div className="flex text-lg mt-10 relative">
-      <div className="pl-8 min-w-32 cursor-pointer group">
+      <div className="pl-8 min-w-32 cursor-pointer group h-10">
         영화
-        <div className="absolute hidden group-hover:block mt-2 ">
-            <p>무비차트</p>
-            <p className="mt-1">영화소개</p>
+        <div className="absolute hidden group-hover:block mt-2">
+          <p>무비차트</p>
+          <p className="mt-1">영화소개</p>
         </div>
       </div>
-      <div className="pl-10 min-w-32 group cursor-pointer group">
+      <div className="pl-10 min-w-32  cursor-pointer group">
         극장
         <div className="absolute hidden group-hover:block mt-1 ">
           <p>극장 정보</p>
