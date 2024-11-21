@@ -13,11 +13,11 @@ const EventBanner = () => {
             console.error("Error fetching events:", error);
         }
     };
-
+    
     useEffect(() => {
         fetchEvents();
     }, []);
-    console.log(selected, events);
+
     const SelectedEvent = (index) => {
         setSelected(index);
     }

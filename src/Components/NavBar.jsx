@@ -1,4 +1,5 @@
 import { CiSearch } from "react-icons/ci";
+import { Link } from "react-router-dom";
 const NavBar = () => {
   return (
     <div className="flex text-lg mt-10 relative">
@@ -17,7 +18,9 @@ const NavBar = () => {
         </div>
       </div>
       <div className="pl-10 min-w-36 cursor-pointer group">
-        예매
+        <Link  to={`/ticket`}>
+          예매
+        </Link>
         <div className="absolute hidden group-hover:block mt-1 ">
           <p>빠른예매</p>
           <p className="mt-1">극장 스케줄</p>

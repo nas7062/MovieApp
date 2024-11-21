@@ -1,0 +1,20 @@
+[
+    {
+        "id" :1,
+        "name":"롯데시네마 영화관람권",
+        "image": "image/8.jpg",
+        "price" :13000
+    },
+    {
+        "id" :2,
+        "name":"CGV 영화관람권",
+        "image": "image/9.jpg",
+        "price" :13000
+    },
+    {
+        "id" :3,
+        "name":"IMAX 영화관람권",
+        "image": "image/10.jpg",
+        "price" :18000
+    }
+]

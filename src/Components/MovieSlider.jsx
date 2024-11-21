@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { useMovies } from "./MoviesContext";
+import { Link } from "react-router-dom";
 const MoiveSlider = () => {
-    const { movies, loading, error } = useMovies();
+    const { movies } = useMovies();
     const [currentIndex, setCurrentIndex] = useState(0);
     const slideWidth = 210;
     const itemsPerPage = 5;
+    console.log(movies);
     const handlePrev = () => {
         setCurrentIndex((prev) => Math.max(prev - itemsPerPage, 0));
     };
@@ -36,7 +38,7 @@ const MoiveSlider = () => {
                     transform: `translateX(-${currentIndex * slideWidth}px)`,
                 }}>
                     {movies.map((movie, idx) => (
-                        <div key={idx} className="text-center max-w-lg mx-4 max-h-96 group">
+                        <div key={movie.id} className="text-center max-w-lg mx-4 max-h-96 group">
                             <img className="max-w-96 max-h-64 object-cover " src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`} alt={movie.title} />
                             <h2 className="text-4xl text-yellow-400 float-left ">{idx + 1}</h2>
                             <div className="relative ">
@@ -44,7 +46,7 @@ const MoiveSlider = () => {
                                 <span>평점: {movie.vote_average.toFixed(2)} </span>
                             </div>
                             <div className="absolute top-0  h-64 w-44 bg-black bg-opacity-75 text-white p-4 flex flex-col justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 ">
-                                <button className="bg-red-600 rounded px-2 py-1">상세보기</button>
+                                <button className="bg-red-600 rounded px-2 py-1"> <Link to={`/detail/${movie.id}`}>상세보기</Link></button>
                                 <button className="bg-green-500 rounded px-2 py-1 mt-3">예매하기</button>
                             </div>
                         </div>

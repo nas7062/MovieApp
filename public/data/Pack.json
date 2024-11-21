@@ -1,0 +1,20 @@
+[
+    {
+        "id" :1,
+        "name":"커플 패키지",
+        "image": "image/5.jpg",
+        "price" :30000
+    },
+    {
+        "id" :2,
+        "name":"솔로 패키지",
+        "image": "image/6.jpg",
+        "price" :15000
+    },
+    {
+        "id" :3,
+        "name":"가족 패키지",
+        "image": "image/7.jpg",
+        "price" :50000
+    }
+]

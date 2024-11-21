@@ -1,0 +1,20 @@
+[
+    {
+        "id" :1,
+        "name":"PACONNIE A형",
+        "image": "image/11.jpg",
+        "amount" :"금액 충전형"
+    },
+    {
+        "id" :2,
+        "name":"PACONNIE B형",
+        "image": "image/12.jpg",
+        "amount" :"금액 충전형"
+    },
+    {
+        "id" :3,
+        "name":"PACONNIE C형",
+        "image": "image/13.jpg",
+        "amount" :"금액 충전형"
+    }
+]
