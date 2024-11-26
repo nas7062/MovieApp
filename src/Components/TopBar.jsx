@@ -3,12 +3,15 @@ import { HiUserPlus } from "react-icons/hi2";
 import { IoPeople } from "react-icons/io5";
 import { MdOutlineWifiTetheringErrorRounded } from "react-icons/md";
 import NavBar from "./NavBar";
+import { Link } from "react-router-dom";
 
 const TopBar = () => {
   return (
     <div className="max-w-screen-lg my-0 mx-auto ">
       <div className="text-red-600 text-5xl tracking-tighter  mt-2 font-bold pl-6 inline-block  cursor-pointer">
-        10012
+        <Link to ="/">
+          10012
+        </Link>
       </div>
       <span className="text-gray-500 text-2xl tracking-wider font-bold pl-6 inline-block">
         MOVIE APP
@@ -31,9 +34,9 @@ const TopBar = () => {
           고객 센터
         </div>
       </div>
-      <NavBar/>
+      <NavBar />
     </div>
-    
+
   );
 };
 export default TopBar;
