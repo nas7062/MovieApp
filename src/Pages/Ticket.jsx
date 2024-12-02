@@ -69,6 +69,7 @@ const Ticket = () => {
       console.error("Error fetching movies:", error);
     }
   };
+  console.log(selectBtn);
   useEffect(() => {
     fetchMovies();
     fetchRegion();
@@ -101,7 +102,7 @@ const Ticket = () => {
       const selected = movieDocs.find(
         (movie) => movie.id === selectedMovie.id
       );
-      
+
       if (!selected) {
         console.error("선택된 영화를 찾을 수 없습니다.");
         return;
@@ -117,7 +118,18 @@ const Ticket = () => {
             .filter((time) => time.time === selectedTime)
             .forEach((time) => {
               time.availableSeats -= number;
+              selectBtn.forEach((seat) => {
+                const row = seat.row;
+                const col = seat.col;
+                if (!time.reservedSeats) {
+                  time.reservedSeats = [];
+                }
+                time.reservedSeats.push({ row, col });
+
+              });
             });
+
+
         });
 
       const movieDocRef = doc(db, "movies", selected.id);
@@ -128,6 +140,7 @@ const Ticket = () => {
       console.error("예약 처리 중 오류 발생:", error);
     }
   };
+  console.log(selectedMovie);
   return (
     <div>
       <TopBar />
@@ -201,9 +214,9 @@ const Ticket = () => {
                           <h3 className="pl-10 text-2xl">{time.time}시</h3>
                           <div className="mt-4">
                             <span className=" px-3 bg-red-500 ml-2"></span>
-                            <span>선택</span>
-                            <span className=" px-3 bg-gray-500 ml-2"></span>
                             <span>예매완료</span>
+                            <span className=" px-3 bg-gray-500 ml-2"></span>
+                            <span>선택</span>
                             <button
                               className="float-right  mr-2 text-white bg-red-500 px-2 py-4 rounded-lg"
                               onClick={() => ReserVation()}
@@ -245,6 +258,7 @@ const Ticket = () => {
                   )}
             </div>
           </div>
+
           <div>
             <h2 className="text-center mt-2 bg-gray-300 w-2/6 mx-auto rounded-lg">
               screen
@@ -256,22 +270,47 @@ const Ticket = () => {
                 <p className=" mt-2 text-lg h-5">{item}</p>
               ))}
             </div>
-            {seat.map((low, index) =>
-              low.map((col, idx) => (
-                <button
-                  className={`mx-1 inline-block border mb-1 border-gray-400  w-6 ${
-                    selectBtn.some(
-                      (seat) => seat.row === index && seat.col === idx
+            {
+              selectedMovie &&
+              selectedMovie.schedules
+                .filter(
+                  (item) =>
+                    item.region === selectedRegion && item.location === selectedLocation
+                )
+                .map((filteredItem) =>
+                  filteredItem.times
+                    .filter((item) => item.time === selectedTime)
+                    .map((time) =>
+                      seat.map((low, index) =>
+                        low.map((col, idx) => {
+                          const isReserved = time.reservedSeats.some(
+                            (reservedSeat) =>
+                              reservedSeat.row === index && reservedSeat.col === idx
+                          );
+                          const isSelected = selectBtn.some(
+                            (seat) => seat.row === index && seat.col === idx
+                          );
+                          return (
+                            <button
+                              key={`${index}-${idx}`}
+                              className={`mx-1 inline-block border mb-1 border-gray-400 w-6 
+                    ${isSelected
+                                  ? "bg-gray-400"
+                                  : isReserved
+                                    ? "bg-red-500"
+                                    : "bg-white"
+                                }`}
+                              onClick={() => SelectedBtn(index, idx)}
+                              disabled={isReserved}
+                            >
+                              {col}
+                            </button>
+                          );
+                        })
+                      )
                     )
-                      ? "bg-gray-400"
-                      : "bg-white"
-                  }`}
-                  onClick={() => SelectedBtn(index, idx)}
-                >
-                  {col}
-                </button>
-              ))
-            )}
+                )
+            }
           </div>
         </div>
       )}
