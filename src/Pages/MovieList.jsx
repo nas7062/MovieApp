@@ -8,7 +8,7 @@ const MovieList = () => {
   return (
     <div>
       <TopBar />
-      <div className="w-3/5 mx-auto mt-40">
+      <div className="w-3/5 mx-auto mt-32">
         <h2 className="text-4xl">무비차트</h2>
         <p className="border border-black w-full mt-4" ></p>
         {movies.map((movie, idx) => (

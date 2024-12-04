@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { useMovies } from "./MoviesContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const MoiveSlider = () => {
     const { movies } = useMovies();
     const [currentIndex, setCurrentIndex] = useState(0);
     const slideWidth = 210;
     const itemsPerPage = 5;
+    const navigate = useNavigate();
     console.log(movies);
     const handlePrev = () => {
         setCurrentIndex((prev) => Math.max(prev - itemsPerPage, 0));
@@ -47,7 +48,7 @@ const MoiveSlider = () => {
                             </div>
                             <div className="absolute top-0  h-64 w-44 bg-black bg-opacity-75 text-white p-4 flex flex-col justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 ">
                                 <button className="bg-red-600 rounded px-2 py-1"> <Link to={`/detail/${movie.id}`}>상세보기</Link></button>
-                                <button className="bg-green-500 rounded px-2 py-1 mt-3">예매하기</button>
+                                <button className="bg-green-500 rounded px-2 py-1 mt-3"onClick={()=>navigate("/ticket")} >예매하기</button>
                             </div>
                         </div>
                     ))}

@@ -4,48 +4,48 @@
       "region": "서울",
       "location": "강남",
       "times": [
-        { "time": "10:00", "availableSeats": 100 },
-        { "time": "18:00", "availableSeats": 100 }
+        { "time": "10:00", "availableSeats": 100 ,"reservedSeats" :[] },
+        { "time": "18:00", "availableSeats": 100 , "reservedSeats" : []}
       ]
     },
     {
       "region": "서울",
       "location": "홍대",
       "times": [
-        { "time": "14:00", "availableSeats": 100 },
-        { "time": "18:00", "availableSeats": 100 }
+        { "time": "14:00", "availableSeats": 100  ,"reservedSeats" :[]},
+        { "time": "18:00", "availableSeats": 100  ,"reservedSeats" :[]}
       ]
     },
     {
       "region": "서울",
       "location": "신촌",
       "times": [
-        { "time": "9:00", "availableSeats": 100 },
-        { "time": "16:00", "availableSeats": 100 }
+        { "time": "9:00", "availableSeats": 100  ,"reservedSeats" :[]},
+        { "time": "16:00", "availableSeats": 100  ,"reservedSeats" :[]}
       ]
     },
     {
       "region": "부산",
       "location": "서면",
       "times": [
-        { "time": "10:00", "availableSeats": 100 },
-        { "time": "18:00", "availableSeats": 100 }
+        { "time": "10:00", "availableSeats": 100  ,"reservedSeats" :[]},
+        { "time": "18:00", "availableSeats": 100  ,"reservedSeats" :[]}
       ]
     },
     {
       "region": "부산",
       "location": "광안리",
       "times": [
-        { "time": "14:00", "availableSeats": 100 },
-        { "time": "18:00", "availableSeats": 100 }
+        { "time": "14:00", "availableSeats": 100 ,"reservedSeats" :[] },
+        { "time": "18:00", "availableSeats": 100  ,"reservedSeats" :[]}
       ]
     },
     {
       "region": "부산",
       "location": "광복",
       "times": [
-        { "time": "9:00", "availableSeats": 100 },
-        { "time": "16:00", "availableSeats": 100 }
+        { "time": "9:00", "availableSeats": 100  ,"reservedSeats" :[]},
+        { "time": "16:00", "availableSeats": 100  ,"reservedSeats" :[]}
       ]
     }
   ]

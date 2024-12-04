@@ -10,7 +10,7 @@ const Login = () => {
   const auth = getAuth();
   const register = async (email, password) => {
     try {
-      const user = await signInWithEmailAndPassword(auth, email, password);
+      await signInWithEmailAndPassword(auth, email, password);
       navigate("/");
     } catch (error) {
       console.log(error.message);
@@ -25,14 +25,14 @@ const Login = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     if (!validateEmail(email)) {
-      console.error("이메일이 유효하지 않습니다.")
+      alert("이메일이 유효하지 않습니다.")
     }
     register(email, password);
   }
   return (
     <div>
       <TopBar />
-      <div className="text-center mt-48 ">
+      <div className="text-center mt-32 ">
         <form onSubmit={onSubmit} className="border border-gray-400 w-96  h-72 mx-auto">
           <div className="mt-20">
             <label className="w-24 ">이메일:</label>

@@ -4,11 +4,13 @@ import TopBar from "../Components/TopBar";
 import TicketMoviList from "../Components/TicketMovieList";
 import RegionList from "../Components/RegionList";
 import Calendar from "../Components/Calendar";
-import { collection, doc, getDocs, updateDoc } from "firebase/firestore";
+import { addDoc, collection, doc, getDocs, updateDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import TimeTable from "../Components/TimeTable";
 import MovieInfo from "../Components/MovieInfo";
 import NumberSelect from "../Components/NumberSelect";
+import { getAuth } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 const Ticket = () => {
   const [region, setRegion] = useState([]);
@@ -20,6 +22,7 @@ const Ticket = () => {
   const [selectedTime, setSelectedTime] = useState(null);
   const [seatSelect, setSeatSelct] = useState(false);
   const [viewseat, setViewSeat] = useState(false);
+  const navigate = useNavigate();
   const arr2 = new Array(14).fill().map((v, i) => i + 1);
   const seat = [];
   const Alpha = Array.from(Array(11), (_, i) => String.fromCharCode(i + 65));
@@ -125,16 +128,31 @@ const Ticket = () => {
                   time.reservedSeats = [];
                 }
                 time.reservedSeats.push({ row, col });
-
               });
             });
 
-
+        
         });
 
       const movieDocRef = doc(db, "movies", selected.id);
       await updateDoc(movieDocRef, { schedules: selected.schedules });
+      const auth = getAuth();
+      const ticketData = {
+        userId: auth.currentUser.uid,
+        movieId: selected.id,
+        movieTitle: selected.title,
+        region: selectedRegion,
+        location: selectedLocation,
+        time: selectedTime,
+        date: selectedDated,
+        seats: selectBtn.map((seat) => ({ row: seat.row, col: seat.col })),
+        number,
+        poster_path: selected.poster_path
+      };
 
+      await addDoc(collection(db, "tickets"), ticketData);
+      
+      navigate('/');
       console.log("예약이 성공적으로 처리되었습니다.");
     } catch (error) {
       console.error("예약 처리 중 오류 발생:", error);
@@ -145,7 +163,7 @@ const Ticket = () => {
     <div>
       <TopBar />
       {!viewseat && (
-        <div className="flex justify-between mx-48 w-3/6 mt-48">
+        <div className="flex justify-between mx-48 w-3/6 mt-32">
           <TicketMoviList movies={movie} setSelectedMovie={setSelectedMovie} />
           <RegionList
             region={region}

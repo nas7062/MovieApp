@@ -32,7 +32,7 @@ const NoticeDetail = () => {
   return (
     <div>
       <TopBar />
-      <div className="w-2/5 mx-auto mt-48" >
+      <div className="w-2/5 mx-auto mt-32" >
       <h2 className="text-3xl mb-4">자주찾는 질문</h2>
         <div className="bg-gray-300">
           <h1 className="text-xl font-bold">{notice.title}</h1>

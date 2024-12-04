@@ -6,8 +6,8 @@ const StoreCard = ({ data, name }) => {
                 <button className="border rounded-lg px-1 py-1 text-sm">더보기 &gt;</button>
             </div>
             <div>
-                {data.map((pc) => (
-                    <div className="flex mt-5 cursor-pointer">
+                {data.map((pc,idx) => (
+                    <div className="flex mt-5 cursor-pointer" key={idx}>
                         <img src={pc.image} alt={pc.name} className="max-w-24 ml-2" />
                         <div className="flex flex-col mt-5 ml-10 font-bold">
                             <p>{pc.name}</p>

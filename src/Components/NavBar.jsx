@@ -6,15 +6,9 @@ const NavBar = () => {
       <div className="pl-8 min-w-32 cursor-pointer group h-10">
         영화
         <div className="absolute hidden group-hover:block mt-2">
+          <Link to="/chart">
           <p>무비차트</p>
-          <p className="mt-1">영화소개</p>
-        </div>
-      </div>
-      <div className="pl-10 min-w-32  cursor-pointer group">
-        극장
-        <div className="absolute hidden group-hover:block mt-1 ">
-          <p>극장 정보</p>
-          <p className="mt-1">특별관</p>
+          </Link>
         </div>
       </div>
       <div className="pl-10 min-w-36 cursor-pointer group">
@@ -22,19 +16,20 @@ const NavBar = () => {
           예매
         </Link>
         <div className="absolute hidden group-hover:block mt-1 ">
+        <Link  to={`/ticket`}>
           <p>빠른예매</p>
-          <p className="mt-1">극장 스케줄</p>
+          </Link>
         </div>
       </div>
       <div className="pl-10 min-w-36 cursor-pointer group">
+        <Link to="/store">
         스토어
+        </Link>
         <div className="absolute hidden group-hover:block mt-1 ">
+          <p>패키지</p>
           <p>영화관람권</p>
           <p className="mt-1">기프트카드</p>
           <p className="mt-1">콤보</p>
-          <p className="mt-1">팝콘</p>
-          <p className="mt-1">음료</p>
-          <p className="mt-1">스낵</p>
         </div>
       </div>
       <div className="pl-10 min-w-40 cursor-pointer group">
