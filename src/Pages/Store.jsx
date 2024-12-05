@@ -1,7 +1,12 @@
 import { useEffect, useState } from "react";
 import TopBar from "../Components/TopBar";
-import { useNavigate } from "react-router-dom";
-
+import { GoGift } from "react-icons/go";
+import { TiShoppingCart } from "react-icons/ti";
+import { BiPurchaseTagAlt } from "react-icons/bi";
+import { addDoc, collection, deleteDoc, doc, getDocs, query, where } from "firebase/firestore";
+import { db } from "../firebase";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { Link, useNavigate } from "react-router-dom";
 const Store = () => {
 
   const [select, setSelect] = useState(0);
@@ -9,7 +14,19 @@ const Store = () => {
   const [pack, setPack] = useState([]);
   const [ticket, setTicket] = useState([]);
   const [gift, setGift] = useState([]);
-  const dataMap = [pack, ticket, gift];
+  const [combo, setCombo] = useState([]);
+  const dataMap = [pack, ticket, gift, combo];
+  const auth = getAuth();
+  const [currentUser, setCurrentUser] = useState(null);
+  const navigate = useNavigate();
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setCurrentUser(user);
+    });
+
+    return () => unsubscribe();
+  }, [auth]);
+  console.log(currentUser)
   const ClickHandler = (index) => {
     setSelect(index);
   }
@@ -26,7 +43,32 @@ const Store = () => {
     fetchData('/data/Pack.json', setPack);
     fetchData('/data/Ticket.json', setTicket);
     fetchData('/data/Gift.json', setGift);
+    fetchData('/data/Combo.json', setCombo);
   }, []);
+
+  const handleAddToCart = async (item) => {
+    try {
+      await addDoc(collection(db, "cart"), {
+        name: item.name,
+        price: item.price,
+        image: item.image,
+        amount: item.amount || 1,
+        userId: currentUser.uid
+      });
+      alert("장바구니에 추가되었습니다!");
+    } catch (error) {
+      console.error("장바구니 추가 중 오류 발생:", error);
+      alert("장바구니 추가에 실패했습니다.");
+    }
+  };
+  const handleAddToBuy = (item) => {
+    const updatedItem = {
+      ...item,
+      amount: item.amount || 1,
+      userId :currentUser.uid
+    };
+    navigate("/buy", { state: { item: updatedItem } });
+  };
   return (
     <div>
       <TopBar />
@@ -35,6 +77,7 @@ const Store = () => {
         {list.map((li, index) => (
           <span onClick={() => ClickHandler(index)} className={`cursor-pointer ${select === index ? 'text-red-500' : 'text-gray-500'}`}>{li}</span>
         ))}
+        <Link to="/cart"><span>장바구니</span></Link>
       </div>
       <div className="mt-8">
         {dataMap[select]?.length > 0 ? (
@@ -42,12 +85,17 @@ const Store = () => {
             {dataMap[select].map((item, index) => (
               <div
                 key={index}
-                className="p-4 border-b border-gray-300 hover:bg-gray-100 flex"
+                className="w-5/6 p-4 border-b border-gray-300 hover:bg-gray-100 flex"
               >
-                <img src={item.image} alt={item.name} className="w-72 h-48"/>
+                <img src={item.image} alt={item.name} className="w-72 h-48" />
                 <span className="text-xl mt-20 ml-10">{item.name}</span>
-                <span  className="text-xl mt-20 ml-10">{item.price ? `${item.price.toLocaleString()}원` : ''}</span>
-                <span  className="text-xl mt-20 ml-10">{item.amount}</span>
+                <span className="text-xl mt-20 ml-10">{item.price ? `${item.price.toLocaleString()}원` : ''}</span>
+                <span className="text-xl mt-20 ml-10">{item.amount}</span>
+                <div>
+                  <button className=" mt-20 ml-4 py-2 px-4 bg-gray-400 rounded-full text-xs "><GoGift size={30} />선물</button>
+                  <button onClick={() => handleAddToCart(item)} className=" mt-20 ml-4 py-2 px-4 bg-gray-400 rounded-full text-xs"><TiShoppingCart size={30} />카트</button>
+                  <button onClick={() => handleAddToBuy(item)} className=" mt-20 ml-4 py-2 px-4 bg-gray-400 rounded-full text-xs"><BiPurchaseTagAlt size={30} />구매</button>
+                </div>
               </div>
             ))}
           </div>
