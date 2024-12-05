@@ -1,9 +1,15 @@
+import { useNavigate } from "react-router-dom";
+
 const StoreCard = ({ data, name }) => {
+    const navigate = useNavigate();
+    const ClickHandler = () => {
+        navigate('/store');
+    }
     return (
         <div className="flex flex-col border border-gray-300 w-80 text-center h-96 mx-5">
             <div className="flex justify-between mx-5">
                 <h3 className="text-xl font-bold">{name}</h3>
-                <button className="border rounded-lg px-1 py-1 text-sm">더보기 &gt;</button>
+                <button onClick={ClickHandler} className="border rounded-lg px-1 py-1 text-sm">더보기 &gt;</button>
             </div>
             <div>
                 {data.map((pc,idx) => (

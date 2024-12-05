@@ -3,7 +3,7 @@ import { HiUserPlus } from "react-icons/hi2";
 import { IoPeople } from "react-icons/io5";
 import { MdOutlineWifiTetheringErrorRounded } from "react-icons/md";
 import NavBar from "./NavBar";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { getAuth } from "firebase/auth";
 
 const TopBar = () => {

@@ -11,6 +11,10 @@ import Service from "./Pages/Service";
 import NoticeDetail from "./Pages/NoticeDetail";
 import InquireDetail from "./Pages/InquireDetail";
 import Store from "./Pages/Store";
+import Event from "./Pages/Event";
+import Cart from "./Pages/Cart";
+import Buy from "./Pages/Buy";
+
 function App() {
 
   return (
@@ -29,7 +33,9 @@ function App() {
             <Route path="/detail/:id" element={<MovieDetail />} />
             <Route path="/notice/:id" element={<NoticeDetail />} />
             <Route path="/inquire/:id" element={<InquireDetail />} />
-
+            <Route path="/event" element={<Event />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/buy" element={<Buy />} />
           </Routes>
         </MoviesProvider>
       </BrowserRouter>
