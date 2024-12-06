@@ -10,6 +10,7 @@ const MyPage = () => {
   const [currentUser, setCurrentUser] = useState(null);
   const [tickets, setTickets] = useState([]);
   const [inquiries, setInquiries] = useState([]);
+  const [buys, setBuys] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -45,21 +46,48 @@ const MyPage = () => {
       console.error("Error fetching inquiries: ", error);
     }
   };
+  const fetchBuys = async (userId) => {
+    try {
+      const q = query(collection(db, "buy"), where("userId", "==", userId));
+      const querySnapshot = await getDocs(q);
+      const buyMap = new Map();
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        const { name, amount, price, image } = data;
+
+        if (buyMap.has(name)) {
+          const existing = buyMap.get(name);
+          buyMap.set(name, {
+            ...existing,
+            amount: existing.amount + amount,
+          });
+        } else {
+          buyMap.set(name, { name, amount, price, image });
+        }
+      });
+      const mergedBuys = Array.from(buyMap.values());
+      setBuys(mergedBuys);
+
+    } catch (error) {
+      alert('buyData 불러오기 실패');
+    }
+  };
   useEffect(() => {
     const fetchData = async () => {
       if (currentUser) {
         await Promise.all([
           fetchUserTickets(currentUser.uid),
           fetchInquiries(currentUser.uid),
+          fetchBuys(currentUser.uid)
         ]);
       }
     };
 
     fetchData();
   }, [currentUser]);
-  
- 
-  
+
+
+
   return (
     <div>
       <TopBar />
@@ -74,7 +102,7 @@ const MyPage = () => {
               <h2>MY 예매내역</h2>
               <div className="bg-white w-full h-28 border border-gray-300 overflow-y-scroll" >
                 {tickets.length !== 0 ? (tickets.map((ticket, idx) => (
-                  <div className="w-80 inline-block border border-gray-400 ml-2 mt-1" key={idx}>
+                  <div className="w-80 inline-block border border-gray-400 ml-2 mt-1 " key={idx}>
                     <img className="w-12 inline-block float-left" src={`https://image.tmdb.org/t/p/w200${ticket.poster_path}`} alt={ticket.movieTitle} />
                     <span>{ticket.movieTitle}</span>
                     <span className="ml-1">{ticket.region}</span>
@@ -94,9 +122,9 @@ const MyPage = () => {
             </div>
             <div className="mt-8 text-center">
               <h2>MY Q&A</h2>
-              <div className="bg-white w-full h-28 border border-gray-300" >
+              <div className="bg-white w-full h-28 border border-gray-300 " >
                 {inquiries.length !== 0 ? (inquiries.map((inquire, idx) => (
-                  <div onClick={()=>  navigate(`/inquire/${inquire.id}`)} className="cursor-pointer w-80 inline-block border border-gray-400 ml-2 mt-1" key={idx}>
+                  <div onClick={() => navigate(`/inquire/${inquire.id}`)} className="cursor-pointer w-80 inline-block border border-gray-400 ml-2 mt-1" key={idx}>
                     <div className="flex  justify-around">
                       <span className="ml-1">작성자:{inquire.displayName}</span>
                       <span>문의유형:{inquire.category}</span>
@@ -104,6 +132,27 @@ const MyPage = () => {
                     <div className="flex  justify-around">
                       <span className="ml-1">작성일:{inquire.date}</span>
                       <span className="ml-1">제목:{inquire.title}</span>
+                    </div>
+                  </div>)
+                ))
+                  : <div className="mt-10">
+                    <p>문의가 없습니다....</p>
+                  </div>}
+              </div>
+            </div>
+            <div className="mt-20 text-center">
+              <h2>MY 구매내역</h2>
+              <div className="bg-white w-full h-28 border border-gray-300 overflow-y-scroll" >
+                {buys.length !== 0 ? (buys.map((buy, idx) => (
+                  <div  className=" w-80 inline-block border border-gray-400 ml-2 mt-1" key={idx}>
+                    <div className="flex  justify-around">
+                      <img src={buy.image} alt={buy.name} className="w-32 h-20" />
+                      <span>상품명:{buy.name}</span>
+                    </div>
+                    <div className="flex  justify-around">
+                      <span className="ml-1 text-sm">가격:{buy.price.toLocaleString()}원</span>
+                      <span className="ml-1 text-sm">수량:{buy.amount.toLocaleString()}개</span>
+                      <span className="ml-1 text-sm">총가격:{(buy.price *buy.amount).toLocaleString()}원</span>
                     </div>
                   </div>)
                 ))
