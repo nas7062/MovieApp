@@ -47,6 +47,13 @@ const Store = () => {
   }, []);
 
   const handleAddToCart = async (item) => {
+    if (!currentUser) {
+      const isLogin = confirm('로그인이 필요합니다. \n로그인 페이지로 이동하시겠습니까?');
+      if (isLogin) {
+        navigate('/login');
+      }
+      return;
+    }
     try {
       await addDoc(collection(db, "cart"), {
         name: item.name,
@@ -62,10 +69,17 @@ const Store = () => {
     }
   };
   const handleAddToBuy = (item) => {
+    if (!currentUser) {
+      const isLogin = confirm('로그인이 필요합니다. \n로그인 페이지로 이동하시겠습니까?');
+      if (isLogin) {
+        navigate('/login');
+      }
+      return;
+    }
     const updatedItem = {
       ...item,
       amount: item.amount || 1,
-      userId :currentUser.uid
+      userId: currentUser.uid
     };
     navigate("/buy", { state: { item: updatedItem } });
   };
@@ -92,9 +106,8 @@ const Store = () => {
                 <span className="text-xl mt-20 ml-10">{item.price ? `${item.price.toLocaleString()}원` : ''}</span>
                 <span className="text-xl mt-20 ml-10">{item.amount}</span>
                 <div>
-                  <button className=" mt-20 ml-4 py-2 px-4 bg-gray-400 rounded-full text-xs "><GoGift size={30} />선물</button>
-                  <button onClick={() => handleAddToCart(item)} className=" mt-20 ml-4 py-2 px-4 bg-gray-400 rounded-full text-xs"><TiShoppingCart size={30} />카트</button>
-                  <button onClick={() => handleAddToBuy(item)} className=" mt-20 ml-4 py-2 px-4 bg-gray-400 rounded-full text-xs"><BiPurchaseTagAlt size={30} />구매</button>
+                  <button onClick={() => handleAddToCart(item)} className=" mt-20 ml-10 py-2 px-4 bg-gray-400 rounded-full text-xs"><TiShoppingCart size={30} />카트</button>
+                  <button onClick={() => handleAddToBuy(item)} className=" mt-20 ml-10 py-2 px-4 bg-gray-400 rounded-full text-xs"><BiPurchaseTagAlt size={30} />구매</button>
                 </div>
               </div>
             ))}
