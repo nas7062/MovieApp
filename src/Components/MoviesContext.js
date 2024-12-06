@@ -31,7 +31,7 @@ export function MoviesProvider({ children }) {
   useEffect(() => {
     const fetchMovies = async () => {
       try {
-        const apiKey = process.env.REACT_APP_MOVIE_API_KEY || '';
+        const apiKey = process.env.REACT_APP_MOVIE_API_KEY ;
         const response = await axios.get(
           `https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}&language=ko&page=1&region=KR`
         );
