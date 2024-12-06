@@ -7,6 +7,7 @@ import { addDoc, collection, deleteDoc, doc, getDocs, query, where } from "fireb
 import { db } from "../firebase";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
+import Footer from "../Components/Footer";
 const Store = () => {
 
   const [select, setSelect] = useState(0);
@@ -83,6 +84,16 @@ const Store = () => {
     };
     navigate("/buy", { state: { item: updatedItem } });
   };
+  const CartNavigate = () => {
+    if (!currentUser) {
+      const isLogin = confirm('로그인이 필요합니다. \n로그인 페이지로 이동하시겠습니까?');
+      if (isLogin) {
+        navigate('/login');
+      }
+    }
+    else
+      navigate('/cart');
+  }
   return (
     <div>
       <TopBar />
@@ -91,7 +102,7 @@ const Store = () => {
         {list.map((li, index) => (
           <span onClick={() => ClickHandler(index)} className={`cursor-pointer ${select === index ? 'text-red-500' : 'text-gray-500'}`}>{li}</span>
         ))}
-        <Link to="/cart"><span>장바구니</span></Link>
+        <span className="cursor-pointer" onClick={() => CartNavigate()}>장바구니</span>
       </div>
       <div className="mt-8">
         {dataMap[select]?.length > 0 ? (
@@ -116,6 +127,7 @@ const Store = () => {
           <p className="text-center mt-8">데이터를 불러오는 중입니다...</p>
         )}
       </div>
+      <Footer />
     </div >
   );
 }
