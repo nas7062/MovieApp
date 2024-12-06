@@ -3,7 +3,7 @@ import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, addDoc, getDocs } from 'firebase/firestore';
 import { getAuth } from "firebase/auth"
 const firebaseConfig = {
-    apiKey: "AIzaSyCW4dAnTwvaTnpCWyWFv1faVF3kF_squAg",
+    apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
     authDomain: "movie-80bbb.firebaseapp.com",
     projectId: "movie-80bbb",
     storageBucket: "movie-80bbb.firebasestorage.app",
