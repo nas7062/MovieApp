@@ -117,16 +117,13 @@ const Ticket = () => {
         id: doc.id,
         ...doc.data(),
       }));
-
       const selected = movieDocs.find(
         (movie) => movie.id === selectedMovie.id
       );
-
       if (!selected) {
         console.error("선택된 영화를 찾을 수 없습니다.");
         return;
       }
-
       selected.schedules
         .filter(
           (item) =>
@@ -146,10 +143,7 @@ const Ticket = () => {
                 time.reservedSeats.push({ row, col });
               });
             });
-
-
         });
-
       const movieDocRef = doc(db, "movies", selected.id);
       await updateDoc(movieDocRef, { schedules: selected.schedules });
       const auth = getAuth();
@@ -165,9 +159,7 @@ const Ticket = () => {
         number,
         poster_path: selected.poster_path
       };
-
       await addDoc(collection(db, "tickets"), ticketData);
-
       navigate('/');
       console.log("예약이 성공적으로 처리되었습니다.");
     } catch (error) {
@@ -178,8 +170,10 @@ const Ticket = () => {
   return (
     <div>
       <TopBar />
+      <h2 className="text-center text-4xl mt-10">예매하기</h2>
       {!viewseat && (
-        <div className="flex justify-between mx-48 w-3/6 mt-32">
+        <div className="flex justify-between mx-96 w-3/6 mt-24">
+
           <TicketMoviList movies={movie} setSelectedMovie={setSelectedMovie} />
           <RegionList
             region={region}
