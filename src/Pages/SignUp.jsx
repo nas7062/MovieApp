@@ -42,6 +42,7 @@ const SignUp = () => {
     <div>
       <TopBar />
       <div className="text-center mt-32 ">
+      <h2 className="text-3xl mb-10">회원가입</h2>
         <form onSubmit={onSubmit} className="border border-gray-400 w-96  h-72 mx-auto">
           <div className="mt-20">
             <label className="w-24 ">이메일:</label>

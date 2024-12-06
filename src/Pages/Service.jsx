@@ -1,14 +1,28 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Notice from "../Components/Notice";
 import TopBar from "../Components/TopBar";
 import Inquiry from "../Components/Inquiry";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 const Service = () => {
   const [select, setSelect] = useState(0);
-
+  const auth = getAuth();
+  const [currentUser, setCurrentUser] = useState(0);
+  const navigate = useNavigate();
   const SelectHandler = (idx) => {
-    setSelect(idx);
+    if (idx === 1 && !currentUser) {
+      navigate("/login");
+    } else {
+      setSelect(idx);
+    }
   }
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setCurrentUser(user);
+    });
+    return () => unsubscribe();
+  }, [auth]);
   console.log(select);
   return (
     <div>

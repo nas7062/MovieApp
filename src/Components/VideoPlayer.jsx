@@ -50,9 +50,6 @@ const VideoPlayer = () => {
           >
             {volume ? <FaVolumeHigh size={45} /> : <FaVolumeXmark size={45} />}
           </div>
-          <div className="text-white border rounded-xl inline-block px-2 py-2 cursor-pointer mt-2">
-            상세보기
-          </div>
         </div>
       </div>
     </div>

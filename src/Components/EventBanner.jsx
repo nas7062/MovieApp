@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const EventBanner = () => {
     const [selected, setSelected] = useState(0);
     const [events, setEvents] = useState([]);
+    const navigate = useNavigate();
     const fetchEvents = async () => {
         try {
             const response = await fetch('/data/Event.json');
@@ -21,11 +23,14 @@ const EventBanner = () => {
     const SelectedEvent = (index) => {
         setSelected(index);
     }
+    const MoveHandler = ()=> {
+        navigate('/event');
+    }
     return (
         <div className="mx-auto max-w-screen-md mt-20 h-96">
             <div className="flex justify-between items-center">
                 <h2 className="text-3xl font-bold ">이벤트</h2>
-                <button className="px-2 py-1 bg-black text-white rounded mt-1 mr-1">전체보기 &gt;</button>
+                <button onClick={MoveHandler} className="px-2 py-1 bg-black text-white rounded mt-1 mr-1">전체보기 &gt;</button>
             </div>
             <div>
                 {events.length > 0 && selected >= 0 && (
