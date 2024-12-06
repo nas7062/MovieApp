@@ -100,7 +100,7 @@ const Store = () => {
       <h2 className="mt-32 w-2/4 text-center text-4xl">스토어</h2>
       <div className="flex justify-around w-2/4 mx-96 text-xl border-y-2 border-black py-2 mt-2">
         {list.map((li, index) => (
-          <span onClick={() => ClickHandler(index)} className={`cursor-pointer ${select === index ? 'text-red-500' : 'text-gray-500'}`}>{li}</span>
+          <span key={index} onClick={() => ClickHandler(index)} className={`cursor-pointer ${select === index ? 'text-red-500' : 'text-gray-500'}`}>{li}</span>
         ))}
         <span className="cursor-pointer" onClick={() => CartNavigate()}>장바구니</span>
       </div>
