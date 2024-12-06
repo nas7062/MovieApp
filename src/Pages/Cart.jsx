@@ -94,7 +94,8 @@ const Cart = () => {
   return (
     <div>
       <TopBar />
-      <div className="w-2/4 mx-auto mt-32 flex flex-col">
+      <div className="w-2/4 mx-auto mt-24 flex flex-col">
+        <h2 className="text-center text-4xl mb-10">장바구니</h2>
         <div className="flex justify-around">
           <span>상품사진</span>
           <span>상품명</span>
@@ -135,9 +136,9 @@ const Cart = () => {
             <span>{total - free.toLocaleString()}원</span>
           </div>
         </div>
-        <button onClick={()=>handleBuyAll()} className="mt-4 py-2 px-4 bg-red-500 text-white w-32 ml-96">총 구매하기</button>
+        <button onClick={() => handleBuyAll()} className="mt-4 py-2 px-4 bg-red-500 text-white w-32 ml-96">총 구매하기</button>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 }
