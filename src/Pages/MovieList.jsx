@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useMovies } from "../Components/MoviesContext";
 import TopBar from "../Components/TopBar";
+import Footer from "../Components/Footer";
 
 const MovieList = () => {
   const { movies } = useMovies();
@@ -28,6 +29,7 @@ const MovieList = () => {
 
         )}
       </div>
+      <Footer/>
     </div>
   );
 }

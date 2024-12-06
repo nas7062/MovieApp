@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import TopBar from "../Components/TopBar";
+import Footer from "../Components/Footer";
 
 const Event = () => {
   const [selected, setSelected] = useState(0);
@@ -44,6 +45,7 @@ const Event = () => {
           </div>
         ))}
       </div>
+      <Footer/>
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import TopBar from "../Components/TopBar";
+import Footer from "../Components/Footer";
 
 const NoticeDetail = () => {
 
@@ -41,6 +42,7 @@ const NoticeDetail = () => {
         <p className="mt-4">{notice.content}</p>
         <button className="bg-black text-white px-2 py-1 float-right" onClick={()=>CatalogClick()}>목록</button>
       </div>
+      <Footer/>
     </div>
   );
 }

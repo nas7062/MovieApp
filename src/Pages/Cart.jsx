@@ -6,6 +6,7 @@ import { db } from "../firebase";
 import { FaCaretUp } from "react-icons/fa";
 import { FaCaretDown } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import Footer from "../Components/Footer";
 const Cart = () => {
   const [currentUser, setCurrentUser] = useState(null);
   const [cart, setCart] = useState([]);
@@ -136,6 +137,7 @@ const Cart = () => {
         </div>
         <button onClick={()=>handleBuyAll()} className="mt-4 py-2 px-4 bg-red-500 text-white w-32 ml-96">총 구매하기</button>
       </div>
+      <Footer/>
     </div>
   );
 }

@@ -4,6 +4,7 @@ import TopBar from "../Components/TopBar";
 import Inquiry from "../Components/Inquiry";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import Footer from "../Components/Footer";
 
 const Service = () => {
   const [select, setSelect] = useState(0);
@@ -36,8 +37,7 @@ const Service = () => {
         </div>
       </div>
       {select === 0 ? <Notice /> : <Inquiry />}
-
-
+      <Footer/>
     </div>
   );
 }

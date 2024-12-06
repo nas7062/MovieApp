@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { collection, db } from "../firebase";
 import { getDocs, query, where } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
+import Footer from "../Components/Footer";
 
 const MyPage = () => {
   const auth = getAuth();
@@ -166,10 +167,8 @@ const MyPage = () => {
       ) : (
         <p className="text-center mt-48">로그인이 필요합니다...</p>
       )}
+      <Footer/>
     </div>
-
-
-
   );
 }
 export default MyPage;

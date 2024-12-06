@@ -5,6 +5,7 @@ import { FaCaretDown } from "react-icons/fa";
 import { addDoc, collection, } from "firebase/firestore";
 import { db } from "../firebase";
 import { useState } from "react";
+import Footer from "../Components/Footer";
 const Buy = () => {
   const { state } = useLocation();
   const initialItem = state.item;
@@ -81,6 +82,7 @@ const Buy = () => {
         </div>
         <button onClick={() => handleAddToBuy(item)} className="mt-4 py-2 px-4 bg-red-500 text-white w-32 ml-96">총 구매하기</button>
       </div>
+      <Footer/>
     </div>
   );
 }

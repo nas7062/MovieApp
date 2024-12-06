@@ -2,6 +2,7 @@ import { createUserWithEmailAndPassword, getAuth, updateProfile } from "firebase
 import TopBar from "../Components/TopBar";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Footer from "../Components/Footer";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -59,6 +60,7 @@ const SignUp = () => {
           <button type="submit" className="mt-4">회원가입</button>
         </form>
       </div>
+      <Footer/>
     </div>
   );
 }

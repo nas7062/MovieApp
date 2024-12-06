@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom"
 import { db } from "../firebase";
 import TopBar from "../Components/TopBar";
+import Footer from "../Components/Footer";
 
 const InquireDetail = () => {
 
@@ -44,6 +45,7 @@ const InquireDetail = () => {
           <p className="mt-2">내용: {inquiry.content}</p>
         </div>
       </div>
+      <Footer/>
     </div>
   );
 }

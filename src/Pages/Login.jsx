@@ -2,6 +2,7 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
 import TopBar from "../Components/TopBar";
 import { useNavigate } from "react-router-dom";
+import Footer from "../Components/Footer";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -46,6 +47,7 @@ const Login = () => {
           <button type="submit" className="mt-4">로그인</button>
         </form>
       </div>
+      <Footer/>
     </div >
   );
 }
