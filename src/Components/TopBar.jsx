@@ -47,7 +47,7 @@ const TopBar = () => {
           </Link>
         </div>
         <div className="pr-10 flex flex-col items-center  cursor-pointer">
-          <Link to="/myPage">
+          <Link to={auth.currentUser ? "/myPage" : "/login"}>
             <IoPeople size={32} />
             마이 페이지
           </Link>
