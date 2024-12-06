@@ -9,7 +9,7 @@ import { db } from "../firebase";
 import TimeTable from "../Components/TimeTable";
 import MovieInfo from "../Components/MovieInfo";
 import NumberSelect from "../Components/NumberSelect";
-import { getAuth } from "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 
 const Ticket = () => {
@@ -28,10 +28,18 @@ const Ticket = () => {
   const Alpha = Array.from(Array(11), (_, i) => String.fromCharCode(i + 65));
   const [selectBtn, setSelectBtn] = useState([]);
   const [selectNumber, SetSelectNumber] = useState({});
+  const auth = getAuth();
+  const [currentUser, setCurrentUser] = useState(null);
   let total = 0;
   for (let i = 0; i < 11; i++) {
     seat.push(arr2);
   }
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setCurrentUser(user);
+    });
+    return () => unsubscribe();
+  }, [auth]);
   const number = Object.values(selectNumber).reduce((a, b) => a + b, 0);
   const SelectedBtn = (row, col) => {
     const alreadySelected = selectBtn.some(
@@ -92,9 +100,17 @@ const Ticket = () => {
     }
   };
   const ViewSeat = () => {
+    if (!currentUser) {
+      const isLogin = confirm('로그인이 필요합니다. \n로그인 페이지로 이동하시겠습니까?');
+      if (isLogin) {
+        navigate('/login');
+      }
+      return;
+    }
     if (seatSelect) setViewSeat(true);
   };
   const ReserVation = async () => {
+
     try {
       const querySnapshot = await getDocs(collection(db, "movies"));
       const movieDocs = querySnapshot.docs.map((doc) => ({
@@ -131,7 +147,7 @@ const Ticket = () => {
               });
             });
 
-        
+
         });
 
       const movieDocRef = doc(db, "movies", selected.id);
@@ -151,7 +167,7 @@ const Ticket = () => {
       };
 
       await addDoc(collection(db, "tickets"), ticketData);
-      
+
       navigate('/');
       console.log("예약이 성공적으로 처리되었습니다.");
     } catch (error) {
