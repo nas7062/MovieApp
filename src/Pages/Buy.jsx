@@ -65,7 +65,7 @@ const Buy = () => {
               <span onClick={() => handleDecrease(item)}><FaCaretDown /></span>
             </div>
           </div>
-          <span>{(item.price).toLocaleString()}원</span>
+          <span>{item.price.toLocaleString()}원</span>
         </div>
         <div className="flex flex-col mt-10 border border-gray-400">
           <div className="flex justify-around bg-gray-300 text-xl py-4">

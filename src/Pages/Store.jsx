@@ -11,12 +11,11 @@ import Footer from "../Components/Footer";
 const Store = () => {
 
   const [select, setSelect] = useState(0);
-  const list = ["패키지", "영화관람권", "기프트카드", "콤보"];
+  const list = ["패키지", "영화관람권", "콤보"];
   const [pack, setPack] = useState([]);
   const [ticket, setTicket] = useState([]);
-  const [gift, setGift] = useState([]);
   const [combo, setCombo] = useState([]);
-  const dataMap = [pack, ticket, gift, combo];
+  const dataMap = [pack, ticket, combo];
   const auth = getAuth();
   const [currentUser, setCurrentUser] = useState(null);
   const navigate = useNavigate();
@@ -43,7 +42,6 @@ const Store = () => {
   useEffect(() => {
     fetchData('/data/Pack.json', setPack);
     fetchData('/data/Ticket.json', setTicket);
-    fetchData('/data/Gift.json', setGift);
     fetchData('/data/Combo.json', setCombo);
   }, []);
 
