@@ -94,7 +94,8 @@ const MyPage = () => {
       <TopBar />
       {currentUser ? (
         <>
-          <div className="w-2/4 mx-auto bg-gray-200 h-2/4 mt-32">
+          <h2 className="text-center text-4xl mt-10">마이페이지</h2>
+          <div className="w-2/4 mx-auto bg-gray-200 h-2/4 mt-20">
             <div className="mx-10 text-center">
               <sapn className="text-3xl">{auth.currentUser.displayName}님</sapn>
               <span className="ml-6">{auth.currentUser.email.split('@')[0]}</span>

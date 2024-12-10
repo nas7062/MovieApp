@@ -173,7 +173,6 @@ const Ticket = () => {
       <h2 className="text-center text-4xl mt-10">예매하기</h2>
       {!viewseat && (
         <div className="flex justify-between mx-96 w-3/6 mt-24">
-
           <TicketMoviList movies={movie} setSelectedMovie={setSelectedMovie} />
           <RegionList
             region={region}

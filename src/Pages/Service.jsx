@@ -28,7 +28,8 @@ const Service = () => {
   return (
     <div>
       <TopBar />
-      <div className="flex w-2/5 mx-auto  mt-32">
+      <h2 className="text-center text-4xl mt-10">고객센터</h2>
+      <div className="flex w-2/5 mx-auto  mt-20">
         <div onClick={() => SelectHandler(0)}>
           <span className="bg-gray-400 w-96 inline-block text-center cursor-pointer border-r border-black">자주찾는 질문</span>
         </div>

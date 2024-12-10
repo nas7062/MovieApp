@@ -12,7 +12,7 @@ const MovieDetail = () => {
   useEffect(() => {
     const fetchMovieDetail = async () => {
       try {
-        const apiKey = process.env.REACT_APP_MOVIE_API_KEY;
+        const apiKey = "6dc064764ae3fcdc077197da76ec3eb4";
         const response = await axios.get(
           `https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&language=ko`
         );
