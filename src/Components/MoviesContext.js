@@ -41,7 +41,7 @@ export function MoviesProvider({ children }) {
         setMovies(sortedMovies);
         const responseSchedule = await fetch('/data/Movie.json');
         const scheduleData = await responseSchedule.json();
-        const schedules = scheduleData.movies; // schedules 로컬 변수화
+        const schedules = scheduleData.movies; 
         for (const movie of sortedMovies) {
           await saveMovieToFirestore(movie, schedules);
         }

@@ -16,7 +16,7 @@ const VideoPlayer = () => {
       const newVolume = !prevVolume;
       setvolumecount(newVolume ? 1 : 0);
       return newVolume;
-    });
+    }); 
   };
   return (
     <div className="max-w-screen-2lg bg-black mt-48 ">

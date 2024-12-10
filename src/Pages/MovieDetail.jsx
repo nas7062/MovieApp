@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import TopBar from "../Components/TopBar";
 import Footer from "../Components/Footer";
 
@@ -9,6 +9,7 @@ const MovieDetail = () => {
   const [movie, setMovie] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchMovieDetail = async () => {
       try {
@@ -25,6 +26,9 @@ const MovieDetail = () => {
     };
     fetchMovieDetail();
   }, [id]);
+  const NaivgateHandler =() => {
+    navigate('/ticket');
+  }
   console.log(movie);
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
@@ -45,7 +49,7 @@ const MovieDetail = () => {
             <span className="mx-1">{movie.adult ? '성인' : '전체관람가'},</span>
             <span>{`${Math.floor(movie.runtime / 60)}시간 ${movie.runtime % 60}분`}</span>
             <p>개봉일: {movie.release_date}</p>
-            <button className="bg-red-500 text-white rounded px-2 py-1 mt-3">예매하기</button>
+            <button onClick={NaivgateHandler} className="bg-red-500 text-white rounded px-2 py-1 mt-3">예매하기</button>
             <p className="mt-5 w-96 ">줄거리 :{movie.overview}</p>
           </div>
         </div>
