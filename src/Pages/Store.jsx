@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
 import TopBar from "../Components/TopBar";
-import { GoGift } from "react-icons/go";
 import { TiShoppingCart } from "react-icons/ti";
 import { BiPurchaseTagAlt } from "react-icons/bi";
-import { addDoc, collection, deleteDoc, doc, getDocs, query, where } from "firebase/firestore";
+import { addDoc, collection, } from "firebase/firestore";
 import { db } from "../firebase";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Footer from "../Components/Footer";
 const Store = () => {
 

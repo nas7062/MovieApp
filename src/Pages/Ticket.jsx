@@ -110,7 +110,6 @@ const Ticket = () => {
     if (seatSelect) setViewSeat(true);
   };
   const ReserVation = async () => {
-
     try {
       const querySnapshot = await getDocs(collection(db, "movies"));
       const movieDocs = querySnapshot.docs.map((doc) => ({
