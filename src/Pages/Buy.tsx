@@ -6,11 +6,19 @@ import { addDoc, collection, } from "firebase/firestore";
 import { db } from "../firebase";
 import { useState } from "react";
 import Footer from "../Components/Footer";
+interface BuyProps {
+  id :number,
+  image:string,
+  name:string,
+  price:number,
+  amount :number,
+  userId :string
+}
 const Buy = () => {
   const { state } = useLocation();
   const initialItem = state.item;
   console.log(initialItem);
-  const [item, setItem] = useState({
+  const [item, setItem] = useState<BuyProps>({
     ...initialItem,
     amount: initialItem.amount || 1,
   });
@@ -61,8 +69,8 @@ const Buy = () => {
           <div className="flex">
             <span>{item.amount}개</span>
             <div className="flex flex-col ml-2 cursor-pointer">
-              <span onClick={() => handleIncrease(item)}><FaCaretUp /></span>
-              <span onClick={() => handleDecrease(item)}><FaCaretDown /></span>
+              <span onClick={() => handleIncrease()}><FaCaretUp /></span>
+              <span onClick={() => handleDecrease()}><FaCaretDown /></span>
             </div>
           </div>
           <span>{item.price.toLocaleString()}원</span>
@@ -78,10 +86,10 @@ const Buy = () => {
             <span className="border-2 rounded-full px-2 border-red-500">-</span>
             <span>{free.toLocaleString()}원</span>
             <span className="border-2 rounded-full px-2 border-red-500">=</span>
-            <span>{total - free.toLocaleString()}원</span>
+            <span>{(total - free).toLocaleString()}원</span>
           </div>
         </div>
-        <button onClick={() => handleAddToBuy(item)} className="mt-4 py-2 px-4 bg-red-500 text-white w-32 ml-96">총 구매하기</button>
+        <button onClick={() => handleAddToBuy()} className="mt-4 py-2 px-4 bg-red-500 text-white w-32 ml-96">총 구매하기</button>
       </div>
       <Footer />
     </div>

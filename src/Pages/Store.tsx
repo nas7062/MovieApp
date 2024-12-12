@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { SetStateAction, useEffect, useState } from "react";
 import TopBar from "../Components/TopBar";
 import { TiShoppingCart } from "react-icons/ti";
 import { BiPurchaseTagAlt } from "react-icons/bi";
@@ -7,17 +7,20 @@ import { db } from "../firebase";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import Footer from "../Components/Footer";
+import { StoreProps } from "Components/StoreBanner";
+import { User } from "firebase/auth";
 const Store = () => {
 
-  const [select, setSelect] = useState(0);
+  const [select, setSelect] = useState<number>(0);
   const list = ["패키지", "영화관람권", "콤보"];
-  const [pack, setPack] = useState([]);
-  const [ticket, setTicket] = useState([]);
-  const [combo, setCombo] = useState([]);
+  const [pack, setPack] = useState<StoreProps[]>([]);
+  const [ticket, setTicket] = useState<StoreProps[]>([]);
+  const [combo, setCombo] = useState<StoreProps[]>([]);
   const dataMap = [pack, ticket, combo];
   const auth = getAuth();
-  const [currentUser, setCurrentUser] = useState(null);
   const navigate = useNavigate();
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
@@ -25,11 +28,11 @@ const Store = () => {
 
     return () => unsubscribe();
   }, [auth]);
-  console.log(currentUser)
-  const ClickHandler = (index) => {
+
+  const ClickHandler = (index: number) => {
     setSelect(index);
   }
-  const fetchData = async (url, setState) => {
+  const fetchData = async (url: string, setState: React.Dispatch<SetStateAction<StoreProps[]>>) => {
     try {
       const response = await fetch(url);
       const data = await response.json();
@@ -44,7 +47,7 @@ const Store = () => {
     fetchData('/data/Combo.json', setCombo);
   }, []);
 
-  const handleAddToCart = async (item) => {
+  const handleAddToCart = async (item:StoreProps) => {
     if (!currentUser) {
       const isLogin = confirm('로그인이 필요합니다. \n로그인 페이지로 이동하시겠습니까?');
       if (isLogin) {
@@ -66,7 +69,7 @@ const Store = () => {
       alert("장바구니 추가에 실패했습니다.");
     }
   };
-  const handleAddToBuy = (item) => {
+  const handleAddToBuy = (item:StoreProps) => {
     if (!currentUser) {
       const isLogin = confirm('로그인이 필요합니다. \n로그인 페이지로 이동하시겠습니까?');
       if (isLogin) {

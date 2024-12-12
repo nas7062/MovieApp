@@ -2,15 +2,20 @@ import { useEffect, useState } from "react";
 import TopBar from "../Components/TopBar";
 import Footer from "../Components/Footer";
 
+interface EvnetProps {
+  id:number,
+  title:string,
+  image:string,
+  tag :string[]
+}
 const Event = () => {
-  const [selected, setSelected] = useState(0);
-  const [events, setEvents] = useState([]);
+  const [selected, setSelected] = useState<number>(0);
+  const [events, setEvents] = useState<EvnetProps[]>([]);
   const fetchEvents = async () => {
     try {
       const response = await fetch('/data/Event.json');
       const data = await response.json();
       setEvents(data);
-
     } catch (error) {
       console.error("Error fetching events:", error);
     }
@@ -20,7 +25,7 @@ const Event = () => {
     fetchEvents();
   }, []);
 
-  const SelectedEvent = (index) => {
+  const SelectedEvent = (index:number) => {
     setSelected(index);
   }
   return (

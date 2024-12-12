@@ -1,4 +1,4 @@
-import { addDoc, collection, deleteDoc, doc, onSnapshot, query, updateDoc, where } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, onSnapshot, query, updateDoc, where, DocumentData } from "firebase/firestore";
 import TopBar from "../Components/TopBar";
 import { useEffect, useState } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
@@ -7,32 +7,47 @@ import { FaCaretUp } from "react-icons/fa";
 import { FaCaretDown } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import Footer from "../Components/Footer";
+import { User } from "firebase/auth";
+interface CartProps {
+  amount: number,
+  id: string,
+  image: string,
+  name: string,
+  price: number,
+  userId: string
+}
 const Cart = () => {
-  const [currentUser, setCurrentUser] = useState(null);
-  const [cart, setCart] = useState([]);
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [cart, setCart] = useState<CartProps[]>([]);
+  console.log(cart);
   const auth = getAuth();
   const navigate = useNavigate();
-  let total = cart.reduce((sum, car) => sum + car.price * car.amount, 0);
-  let free = 0;
+  const [total, setTotal] = useState(0);
+  const [free, setFree] = useState(0);
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
     });
     return () => unsubscribe();
   }, [auth]);
+
+  useEffect(() => {
+    const newTotal = cart.reduce((sum, car) => sum + car.price * car.amount, 0);
+    setTotal(newTotal);
+  }, [cart]); //
   useEffect(() => {
     if (!currentUser) return;
     const q = query(collection(db, "cart"), where("userId", "==", currentUser.uid));
     const unsubscribe = onSnapshot(q, (snapshot) => {
-      const CartData = snapshot.docs.map((doc) => ({
+      const CartData: CartProps[] = snapshot.docs.map((doc: DocumentData) => ({
         id: doc.id,
         ...doc.data(),
-      }));
+      }))
       setCart(CartData);
     });
     return () => unsubscribe();
   }, [currentUser]);
-  const UpdateCart = async (cartId, newAmount) => {
+  const UpdateCart = async (cartId: string, newAmount: number) => {
     try {
       const cartRef = doc(db, "cart", cartId);
       console.log(cartRef);
@@ -41,11 +56,11 @@ const Cart = () => {
       alert('amount update error');
     }
   }
-  const handleIncrease = (cart) => {
+  const handleIncrease = (cart: CartProps) => {
     const newAmount = cart.amount + 1;
     UpdateCart(cart.id, newAmount);
   };
-  const handleDecrease = (cart) => {
+  const handleDecrease = (cart: CartProps) => {
     if (cart.amount > 1) {
       const newAmount = cart.amount - 1;
       UpdateCart(cart.id, newAmount);
@@ -53,7 +68,10 @@ const Cart = () => {
       UpdateCart(cart.id, 0);
     }
   };
-  const handleAddToBuy = (item) => {
+  const handleAddToBuy = (item: CartProps) => {
+    if (!currentUser) {
+      return;
+    }
     const updatedItem = {
       ...item,
       amount: item.amount || 1,
@@ -61,7 +79,7 @@ const Cart = () => {
     };
     navigate("/buy", { state: { item: updatedItem } });
   };
-  const handleDeleteCart = async (itemId) => {
+  const handleDeleteCart = async (itemId: string) => {
     try {
       await deleteDoc(doc(db, "cart", itemId));
       alert("아이템이 삭제되었습니다!");
@@ -71,6 +89,9 @@ const Cart = () => {
     }
   };
   const handleBuyAll = async () => {
+    if (!currentUser) {
+      return;
+    }
     try {
       for (const car of cart) {
         await addDoc(collection(db, "buy"), {
@@ -115,7 +136,7 @@ const Cart = () => {
                 <span onClick={() => handleDecrease(car)}><FaCaretDown /></span>
               </div>
             </div>
-            <span>{(car.price).toLocaleString()}원</span>
+            <span>{(car.price *car.amount).toLocaleString()}원</span>
             <div>
               <span className="cursor-pointer mr-4 bg-black text-white rounded-md px-2 py-1" onClick={() => handleAddToBuy(car)}>구매하기</span>
               <span className="cursor-pointer text-red-500 text-xl" onClick={() => handleDeleteCart(car.id)}>x</span>
@@ -133,7 +154,7 @@ const Cart = () => {
             <span className="border-2 rounded-full px-2 border-red-500">-</span>
             <span>{free.toLocaleString()}원</span>
             <span className="border-2 rounded-full px-2 border-red-500">=</span>
-            <span>{total - free.toLocaleString()}원</span>
+            <span>{(total - free).toLocaleString()}원</span>
           </div>
         </div>
         <button onClick={() => handleBuyAll()} className="mt-4 py-2 px-4 bg-red-500 text-white w-32 ml-96">총 구매하기</button>
