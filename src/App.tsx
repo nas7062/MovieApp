@@ -20,24 +20,22 @@ function App() {
   return (
     <div>
       <BrowserRouter>
-        <MoviesProvider>
-          <Routes>
-            <Route path="/" element={<Main />} />
-            <Route path="/store" element={<Store />} />
-            <Route path="/ticket" element={<Ticket />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/myPage" element={<MyPage />} />
-            <Route path="/chart" element={<MovieList />} />
-            <Route path="/service" element={<Service />} />
-            <Route path="/detail/:id" element={<MovieDetail />} />
-            <Route path="/notice/:id" element={<NoticeDetail />} />
-            <Route path="/inquire/:id" element={<InquireDetail />} />
-            <Route path="/event" element={<Event />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/buy" element={<Buy />} />
-          </Routes>
-        </MoviesProvider>
+        <Routes>
+          <Route path="/" element={<Main />} />
+          <Route path="/store" element={<Store />} />
+          <Route path="/ticket" element={<Ticket />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/myPage" element={<MyPage />} />
+          <Route path="/chart" element={<MovieList />} />
+          <Route path="/service" element={<Service />} />
+          <Route path="/detail/:id" element={<MovieDetail />} />
+          <Route path="/notice/:id" element={<NoticeDetail />} />
+          <Route path="/inquire/:id" element={<InquireDetail />} />
+          <Route path="/event" element={<Event />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/buy" element={<Buy />} />
+        </Routes>
       </BrowserRouter>
     </div>
   );

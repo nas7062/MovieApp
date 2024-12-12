@@ -3,12 +3,12 @@ import { useMovies } from "./MoviesContext";
 import { Link, useNavigate } from "react-router-dom";
 
 interface MovieProps {
-    id : number,
-    poster_path:string,
-    title:string,
-    vote_average:number,
+    id : number;
+    poster_path:string;
+    title:string;
+    vote_average:number;
 }
-const MoiveSlider = () => {
+const MovieSlider = () => {
     const { movies } = useMovies();
     const [currentIndex, setCurrentIndex] = useState<number>(0);
     const slideWidth = 210; // 슬라이더 width
@@ -64,4 +64,4 @@ const MoiveSlider = () => {
     );
 }
 
-export default MoiveSlider;
+export default MovieSlider;

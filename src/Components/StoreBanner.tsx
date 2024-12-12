@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import StoreCard from "./StoreCard";
 
-interface StoreProps {
+export interface StoreProps {
     id: number,
     name: string,
     image: string,
-    price: number
+    price: number,
+    amount? :number
 }
 const StoreBanner = () => {
     const [pack, setPack] = useState<StoreProps[]>([]);
