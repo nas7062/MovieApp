@@ -1,14 +1,23 @@
-import { useEffect, useState } from "react";
-import {useNavigate } from "react-router-dom";
-
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+interface NoticeProps {
+  id: number;
+  category: string;
+  title: string;
+  views: number;
+}
 const Notice = () => {
-  const [notice, setNotice] = useState([]);
+  const [notice, setNotice] = useState<NoticeProps[]>([]);
   const navigate = useNavigate();
   const fetchNotice = async () => {
     try {
       const response = await fetch("/data/Notice.json");
-      const data = await response.json();
-      const savedViews = JSON.parse(localStorage.getItem("noticeViews")) || {};
+      const data: NoticeProps[] = await response.json();
+      const savedViews: Record<number, number> = (() => {
+        const stored = localStorage.getItem("noticeViews");
+        return stored ? JSON.parse(stored) : {};
+      })();
+      console.log(savedViews);
       const updatedData = data.map((item) => ({
         ...item,
         views: savedViews[item.id] || item.views,
@@ -19,17 +28,17 @@ const Notice = () => {
       console.error("Error fetching notices:", error);
     }
   };
-  const handleClick = async (id) => {
-    await updateViews(id); 
-    navigate(`/notice/${id}`); 
+  const handleClick = async (id: number) => {
+    await updateViews(id);
+    navigate(`/notice/${id}`);
   };
-  const updateViews = (id) => {
+  const updateViews = (id: number) => {
     setNotice((prevNotice) => {
       const updatedNotice = prevNotice.map((item) =>
         item.id === id ? { ...item, views: item.views + 1 } : item
       );
 
-      const viewsToSave = updatedNotice.reduce((acc, item) => {
+      const viewsToSave = updatedNotice.reduce((acc: Record<number, number>, item) => {
         acc[item.id] = item.views;
         return acc;
       }, {});
@@ -38,7 +47,7 @@ const Notice = () => {
 
       return updatedNotice;
     });
-    
+
   };
 
   useEffect(() => {

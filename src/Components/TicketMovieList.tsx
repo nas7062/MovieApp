@@ -1,4 +1,16 @@
-const TicketMoviList = ({movies ,setSelectedMovie}) => {
+import React, { Dispatch, SetStateAction } from "react";
+
+interface MovieProps {
+  id:number,
+  adult:number,
+  title:string
+}
+interface MovieListProps {
+  movies : MovieProps[],
+  setSelectedMovie : React.Dispatch<SetStateAction<MovieProps | null>>;
+}
+
+const TicketMoviList:React.FC<MovieListProps> = ({movies ,setSelectedMovie}) => {
   
   return (
     <div className="border border-gray-400">

@@ -1,4 +1,23 @@
-const TimeTable = ({selectedMovie, selectedRegion, selectedLocation ,setSelectedTime}) => {
+import React, { SetStateAction } from "react";
+
+interface ScheduleProps {
+  region: string;
+  location: string;
+  times: { time: string; availableSeats: number }[]; 
+}
+
+interface MovieProps {
+  id: number;
+  title: string;
+  schedules: ScheduleProps[]; 
+}
+interface TimeTableProps {
+  selectedMovie :MovieProps;
+  selectedRegion:string;
+  selectedLocation:string;
+  setSelectedTime:React.Dispatch<SetStateAction<string | null>>;
+}
+const TimeTable:React.FC<TimeTableProps> = ({selectedMovie, selectedRegion, selectedLocation ,setSelectedTime}) => {
 
   return (
     <div className="border border-gray-400">
